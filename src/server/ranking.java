@@ -4,8 +4,10 @@ import java.io.*;
 
 public class ranking implements rankport{
 
-    private String id[]=new String[5];
-    private int score[]=new int[5];
+
+    private static int kk=0;//0->一站到底、1->七步杀
+    private String id[][]=new String[2][5];
+    private int score[][]=new int[2][5];
     private File file;
     public ranking(int k){
         if(k==0){
@@ -23,19 +25,25 @@ public class ranking implements rankport{
         return num;
     }
 
+    public static void setkk(int m){
+        kk=m;
+    }
+
     @Override
     public void readTxt() {
         BufferedReader reader=null;
         try {
             reader=new BufferedReader(new FileReader(file));
             String str=null,sc=null;
-
-            for(int i=0;i<5;i++){
-                str=reader.readLine();
-                id[i]=str;
-                sc=reader.readLine();
-                score[i]=getint(sc);
+            for(int j=0;j<2;j++){
+                for(int i=0;i<5;i++){
+                    str=reader.readLine();
+                    id[j][i]=str;
+                    sc=reader.readLine();
+                    score[j][i]=getint(sc);
+                }
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -49,29 +57,48 @@ public class ranking implements rankport{
                 }
             }
         }
-        for(int i=0;i<5;i++){
-            System.out.println(id[i]+" "+score[i]);
-        }
+        /*for(int i=0;i<5;i++){
+            System.out.println(id[kk][i]+" "+score[kk][i]);
+        }*/
     }
 
     @Override
     public String getrank() {
         this.readTxt();
 
+        String res="";
+        for(int i=0;i<5;i++){
+            res+=id[kk][i];
 
-        return null;
+            int len=0;
+            char aim[]=id[kk][i].toCharArray();
+            for(int j=0;j<id[kk][i].length();j++){
+                if (aim[j] >= 0 && aim[j] <= 128)
+                    len += 1;
+                else
+                    len += 2;
+            }
+            int h=20-len;
+            for(int j=0;j<h;j++){
+                res+=" ";
+            }
+            res+=score[kk][i];
+            res+="\n";
+        }
+
+        return res;
     }
 
     @Override
     public String getWinnerid() {
         this.readTxt();
-        return id[0];
+        return id[kk][0];
     }
 
     @Override
     public int getWinnersc() {
         this.readTxt();
-        return score[0];
+        return score[kk][0];
     }
 
     @Override
@@ -79,7 +106,7 @@ public class ranking implements rankport{
         this.readTxt();
         int k=-1;
         for(int i=0;i<5;i++){
-            if(score[i]<sc||id[i].equals("无")){
+            if(score[kk][i]<sc||id[kk][i].equals("无")){
                 k=i;
                 break;
             }
@@ -88,16 +115,19 @@ public class ranking implements rankport{
             return false;
         }
         for(int i=4;i>k;i--){
-            id[i]=id[i-1];
-            score[i]=score[i-1];
+            id[kk][i]=id[kk][i-1];
+            score[kk][i]=score[kk][i-1];
         }
-        id[k]=str;
-        score[k]=sc;
+        id[kk][k]=str;
+        score[kk][k]=sc;
         String fin="";
-        for(int i=0;i<5;i++){
-            fin+=(id[i]+"\n");
-            fin+=(""+score[i]+"\n");
+        for(int j=0;j<2;j++){
+            for(int i=0;i<5;i++){
+                fin+=(id[j][i]+"\n");
+                fin+=(""+score[j][i]+"\n");
+            }
         }
+
         try {
             FileWriter fw=new FileWriter(file);
             fw.write(fin);
