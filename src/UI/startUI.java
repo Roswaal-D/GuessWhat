@@ -1,5 +1,7 @@
 package UI;
+import server.rankUI;
 import server.ranking;
+import Game.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,11 @@ public class startUI extends JFrame implements ActionListener {
     private Font font;
     private JButton jb1,jb2,jb3,jb4;
 
+
+
     public startUI(){
+        ranking.setkk(0);
+
         rnkA=new ranking(0);
         rnkB=new ranking(1);
 
@@ -120,13 +126,12 @@ public class startUI extends JFrame implements ActionListener {
         jf.add(j1);
         jf.add(j2);
 
-        ps=new JMenuItem("数字排行");
+        ps=new JMenuItem("当前模式排行");
         ps.addActionListener(this);
-        pz=new JMenuItem("字母排行");
-        pz.addActionListener(this);
+
         ph=new JMenu("分数排行");
         ph.add(ps);
-        ph.add(pz);
+       // ph.add(pz);
 
         jmb=new JMenuBar();
         jmb.add(jf);
@@ -139,8 +144,9 @@ public class startUI extends JFrame implements ActionListener {
 
 
         //一站到底-panel
+        //if(mod==0)
         yzinit();
-
+        //else
         //七步杀-pabel
         //qbinit();
 
@@ -165,17 +171,30 @@ public class startUI extends JFrame implements ActionListener {
             contain.validate();
             contain.repaint();
         }
+        if(e.getSource()==ps){
+            rankUI ru =new rankUI();
+            dispose();
+        }
         if(e.getSource()==jb1){
+            fatherGame fg=new fatherGame(0);
             System.out.println("一站到底1234");
+            dispose();
+
         }
         if(e.getSource()==jb2){
+            fatherGame fg=new fatherGame(1);
             System.out.println("一站到底abcd");
+            dispose();
         }
         if(e.getSource()==jb3){
+            fatherGame fg=new sevGame(2);
             System.out.println("七步杀1234");
+            dispose();
         }
         if(e.getSource()==jb4){
+            fatherGame fg=new sevGame(3);
             System.out.println("七步杀abcd");
+            dispose();
         }
 
     }

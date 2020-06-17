@@ -11,9 +11,9 @@ public class ranking implements rankport{
     private File file;
     public ranking(int k){
         if(k==0){
-            file=new File("d:/TEM","rankA.txt");
+            file=new File("TEM","rankA.txt");
         }else {
-            file = new File("d:/TEM", "rankB.txt");
+            file = new File("TEM", "rankB.txt");
         }
     }
     public int getint(String aim){
@@ -28,6 +28,8 @@ public class ranking implements rankport{
     public static void setkk(int m){
         kk=m;
     }
+
+    public static int getkk(){return kk;}
 
     @Override
     public void readTxt() {
@@ -86,6 +88,7 @@ public class ranking implements rankport{
             res+="\n";
         }
 
+        System.out.println(res);
         return res;
     }
 
