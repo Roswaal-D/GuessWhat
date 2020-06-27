@@ -171,8 +171,10 @@ public class fatherGame extends JFrame implements ActionListener {
                 if(temas[i]==as[j]) a++;
             }
         }
+        b=a-b;
+        a=a-b;
 
-        if(b==4){
+        if(a==4){
             yz=true;
         }
 

@@ -1,5 +1,6 @@
 package Game;
 
+import server.rankUI;
 import server.ranking;
 
 import javax.swing.*;
@@ -33,11 +34,14 @@ public class sevGame extends fatherGame {
             }
         }
 
-        if(b==4){
+        b=a-b;
+        a=a-b;
+
+        if(a==4){
             yz=true;
             scc+=(8*(7-lj));
         }else{
-            scc+=(a+b);
+            scc+=(2*a+b);
         }
         System.out.println(scc);
 
@@ -57,6 +61,7 @@ public class sevGame extends fatherGame {
             }
 
             JOptionPane.showMessageDialog(null,jl,"游戏结算",JOptionPane.PLAIN_MESSAGE);
+            rankUI ru=new rankUI();
             dispose();
         }
     }
